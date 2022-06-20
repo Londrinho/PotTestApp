@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+
+    <script>
+        var xValues = [];
+        var yVlaues = [];
+        var barcolors = ["red","green","blue"];
+
+        function getFrom() {
+            var stringList = null;
+            stringList = Android.getFromAndroid();
+            var jsonString = JSON.parse(stringList);
+
+            for (var i=0; i<jsonString.length; i++) {
+                let obj = jsonString[i];
+                xValues[i] = obj.name;
+                yVlaues[i] = obj.qty;
+            }
+
+             new Chart('myChart', {
+                type: 'bar',
+                data: {
+                  labels: xValues,
+                  datasets: [{
+                    backgroundColor: barcolors,
+                    data: yVlaues
+                  }]
+                },
+
+                  options: {legend: {display: false},
+                    title: {
+                      display: true,
+                      text: "Timesheets for Job 12346"}
+
+              }});
+        }
+
+    </script>
+
+
+</head>
+
+<body>
+
+<input type="button" value="Get from Android" onclick="getFrom()" />
+
+<canvas id="myChart" width="400" height="400"></canvas>
+
+</body>
+</html>
